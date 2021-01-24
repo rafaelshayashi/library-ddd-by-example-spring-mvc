@@ -3,10 +3,11 @@ package br.com.rafaelshayashi.catalogue.controller;
 import br.com.rafaelshayashi.catalogue.controller.request.BookRequest;
 import br.com.rafaelshayashi.catalogue.controller.response.BookResponse;
 import br.com.rafaelshayashi.catalogue.service.BookService;
-import br.com.rafaelshayashi.catalogue.util.validator.BookRequestValidator;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -17,16 +18,9 @@ import java.net.URI;
 public class BookController {
 
     private final BookService service;
-    private final BookRequestValidator validator;
 
-    public BookController(BookService service, BookRequestValidator validator) {
+    public BookController(BookService service) {
         this.service = service;
-        this.validator = validator;
-    }
-
-    @InitBinder
-    public void init(WebDataBinder dataBinder) {
-        dataBinder.setValidator(validator);
     }
 
     @PostMapping
