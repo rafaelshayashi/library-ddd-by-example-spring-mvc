@@ -1,9 +1,6 @@
 package br.com.rafaelshayashi.catalogue.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -18,15 +15,15 @@ public class Book {
     private UUID uuid;
     @NotEmpty
     private String name;
-    @NotNull
-    private Integer value;
+    @Embedded
+    private BookValue value;
     @NotEmpty
     private String isbn;
 
     public Book() {
     }
 
-    public Book(String name, Integer value, String isbn) {
+    public Book(String name, BookValue value, String isbn) {
         this.uuid = UUID.randomUUID();
         this.name = name;
         this.value = value;
@@ -57,11 +54,11 @@ public class Book {
         this.name = name;
     }
 
-    public Integer getValue() {
+    public BookValue getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(BookValue value) {
         this.value = value;
     }
 
@@ -79,7 +76,7 @@ public class Book {
 
     public static class FluentBuilder {
         private String name;
-        private Integer value;
+        private BookValue value;
         private String isbn;
 
         public FluentBuilder name(String name) {
@@ -87,7 +84,7 @@ public class Book {
             return this;
         }
 
-        public FluentBuilder value(Integer value){
+        public FluentBuilder value(BookValue value){
             this.value = value;
             return this;
         }

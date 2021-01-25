@@ -2,6 +2,8 @@ CREATE TABLE IF NOT EXISTS book (
     id BIGSERIAL PRIMARY KEY,
     uuid uuid NOT NULL,
     name VARCHAR NOT NULL,
-    value INTEGER NOT NULL,
+    currency VARCHAR NOT NULL,
+    amount INTEGER NOT NULL,
+    unit_type VARCHAR NOT NULL,
     isbn VARCHAR NOT NULL UNIQUE
 );
