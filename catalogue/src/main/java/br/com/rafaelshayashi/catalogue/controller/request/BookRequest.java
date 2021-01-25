@@ -10,7 +10,7 @@ public class BookRequest {
     @NotEmpty
     private String name;
     @NotNull
-    private Integer value;
+    private BookValueRequest value;
     @NotEmpty
     private String isbn;
 
@@ -22,11 +22,11 @@ public class BookRequest {
         this.name = name;
     }
 
-    public Integer getValue() {
+    public BookValueRequest getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(BookValueRequest value) {
         this.value = value;
     }
 
@@ -39,6 +39,6 @@ public class BookRequest {
     }
 
     public Book toModel() {
-        return Book.builder().name(name).value(value).isbn(isbn).build();
+        return Book.builder().name(name).value(value.toModel()).isbn(isbn).build();
     }
 }
