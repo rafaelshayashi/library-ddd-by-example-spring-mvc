@@ -5,18 +5,18 @@ import br.com.rafaelshayashi.catalogue.model.BookValue;
 public class BookValueResponse {
 
     private final String currency;
-    private final Integer value;
+    private final Integer amount;
     private final String unit;
 
     public BookValueResponse() {
         this.currency = null;
-        this.value = null;
+        this.amount = null;
         this.unit = null;
     }
 
-    public BookValueResponse(String currency, Integer value, String unit) {
+    public BookValueResponse(String currency, Integer amount, String unit) {
         this.currency = currency;
-        this.value = value;
+        this.amount = amount;
         this.unit = unit;
     }
 
@@ -31,8 +31,8 @@ public class BookValueResponse {
         return currency;
     }
 
-    public Integer getValue() {
-        return value;
+    public Integer getAmount() {
+        return amount;
     }
 
     public String getUnit() {

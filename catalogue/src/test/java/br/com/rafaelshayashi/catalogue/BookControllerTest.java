@@ -2,6 +2,8 @@ package br.com.rafaelshayashi.catalogue;
 
 import br.com.rafaelshayashi.catalogue.controller.request.BookRequest;
 import br.com.rafaelshayashi.catalogue.model.Book;
+import br.com.rafaelshayashi.catalogue.model.BookValue;
+import br.com.rafaelshayashi.catalogue.model.UnitTypeEnum;
 import br.com.rafaelshayashi.catalogue.service.BookService;
 import br.com.rafaelshayashi.catalogue.util.exception.ResourceAlreadyExistsException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,8 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class BookControllerTest {
-
-
+    
     @MockBean
     private BookService service;
 
@@ -51,7 +52,7 @@ public class BookControllerTest {
         Book bookMock = Book
                 .builder()
                 .name("Métricas ágeis")
-                .value(2900)
+                .value(BookValue.builder().amount(2900).currency("BRL").unit(UnitTypeEnum.FRACTIONAL).build())
                 .isbn("978-85-5519-276-19")
                 .build();
 
@@ -62,7 +63,9 @@ public class BookControllerTest {
                 .content(asJsonString(bookMock)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is("Métricas ágeis")))
-                .andExpect(jsonPath("$.value", is(2900)))
+                .andExpect(jsonPath("$.value.currency", is("BRL")))
+                .andExpect(jsonPath("$.value.amount", is(2900)))
+                .andExpect(jsonPath("$.value.unit", is("FRACTIONAL")))
                 .andExpect(jsonPath("$.isbn", is("978-85-5519-276-19")));
     }
 
@@ -72,7 +75,7 @@ public class BookControllerTest {
         Book bookMock = Book
                 .builder()
                 .name("Métricas ágeis")
-                .value(2900)
+                .value(BookValue.builder().amount(2900).currency("BRL").unit(UnitTypeEnum.FRACTIONAL).build())
                 .isbn("978-85-5519-276-19")
                 .build();
 
@@ -89,7 +92,7 @@ public class BookControllerTest {
     @DisplayName("POST /books - Try to create a book without name")
     public void try_to_create_a_book_without_name() throws Exception {
         Book bookRequest = Book.builder()
-                .value(2900)
+                .value(BookValue.builder().amount(2900).currency("BRL").unit(UnitTypeEnum.FRACTIONAL).build())
                 .isbn("978-85-5519-276-19")
                 .build();
 
@@ -120,7 +123,7 @@ public class BookControllerTest {
     public void try_to_create_a_book_without_isbn() throws Exception {
         Book bookRequest = Book.builder()
                 .name("Métricas ágeis")
-                .value(2900)
+                .value(BookValue.builder().amount(2900).currency("BRL").unit(UnitTypeEnum.FRACTIONAL).build())
                 .build();
 
         mockMvc.perform(post("/books")
