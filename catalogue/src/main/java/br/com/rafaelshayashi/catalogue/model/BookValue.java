@@ -22,8 +22,8 @@ public class BookValue {
         this.unitType = unitType;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static BookValueBuilder builder() {
+        return new BookValueBuilder();
     }
 
     public String getCurrency() {
@@ -50,27 +50,27 @@ public class BookValue {
         this.unitType = unit;
     }
 
-    public static class Builder {
+    public static final class BookValueBuilder {
         private String currency;
         private Integer amount;
         private UnitTypeEnum unit;
 
-        public Builder currency(String currency) {
+        public BookValueBuilder currency(String currency) {
             this.currency = currency;
             return this;
         }
 
-        public Builder amount(Integer amount) {
+        public BookValueBuilder amount(Integer amount) {
             this.amount = amount;
             return this;
         }
 
-        public Builder unit(String unit) {
+        public BookValueBuilder unit(String unit) {
             this.unit = UnitTypeEnum.fromValue(unit);
             return this;
         }
 
-        public Builder unit(UnitTypeEnum unit) {
+        public BookValueBuilder unit(UnitTypeEnum unit) {
             this.unit = unit;
             return this;
         }

@@ -30,6 +30,10 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public static BookBuilder builder() {
+        return new BookBuilder();
+    }
+
     public Long getId() {
         return id;
     }
@@ -70,26 +74,22 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public static FluentBuilder builder() {
-        return new FluentBuilder();
-    }
-
-    public static class FluentBuilder {
+    public static final class BookBuilder {
         private String name;
         private BookValue value;
         private String isbn;
 
-        public FluentBuilder name(String name) {
+        public BookBuilder name(String name) {
             this.name = name;
             return this;
         }
 
-        public FluentBuilder value(BookValue value){
+        public BookBuilder value(BookValue value) {
             this.value = value;
             return this;
         }
 
-        public FluentBuilder isbn(String isbn) {
+        public BookBuilder isbn(String isbn) {
             this.isbn = isbn;
             return this;
         }
