@@ -1,9 +1,11 @@
-CREATE TABLE IF NOT EXISTS book (
-    id BIGSERIAL PRIMARY KEY,
-    uuid uuid NOT NULL,
-    name VARCHAR NOT NULL,
-    currency VARCHAR NOT NULL,
-    amount INTEGER NOT NULL,
-    unit_type VARCHAR NOT NULL,
-    isbn VARCHAR NOT NULL UNIQUE
+create table if not exists book (
+    id BIGSERIAL primary key,
+    uuid uuid not null,
+    title varchar (255) not null,
+    sub_title varchar (255),
+    currency varchar (6) not null,
+    amount integer not null,
+    unit_type varchar not null,
+    description text,
+    isbn varchar not null unique
 );

@@ -14,19 +14,23 @@ public class Book {
     @NotNull
     private UUID uuid;
     @NotEmpty
-    private String name;
+    private String title;
+    private String subTitle;
     @Embedded
     private BookValue value;
+    private String description;
     @NotEmpty
     private String isbn;
 
     public Book() {
     }
 
-    public Book(String name, BookValue value, String isbn) {
+    public Book(String title, String subTitle, BookValue value, String description, String isbn) {
         this.uuid = UUID.randomUUID();
-        this.name = name;
+        this.title = title;
+        this.subTitle = subTitle;
         this.value = value;
+        this.description = description;
         this.isbn = isbn;
     }
 
@@ -50,12 +54,20 @@ public class Book {
         this.uuid = uuid;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String name) {
+        this.title = name;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
+    }
+
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
     }
 
     public BookValue getValue() {
@@ -64,6 +76,14 @@ public class Book {
 
     public void setValue(BookValue value) {
         this.value = value;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getIsbn() {
@@ -75,17 +95,29 @@ public class Book {
     }
 
     public static final class BookBuilder {
-        private String name;
+        private String title;
+        private String subTitle;
         private BookValue value;
+        private String description;
         private String isbn;
 
-        public BookBuilder name(String name) {
-            this.name = name;
+        public BookBuilder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public BookBuilder subTitle(String subTitle) {
+            this.subTitle = subTitle;
             return this;
         }
 
         public BookBuilder value(BookValue value) {
             this.value = value;
+            return this;
+        }
+
+        public BookBuilder description(String description) {
+            this.description = description;
             return this;
         }
 
@@ -95,7 +127,7 @@ public class Book {
         }
 
         public Book build() {
-            return new Book(name, value, isbn);
+            return new Book(title, subTitle, value, description, isbn);
         }
     }
 }

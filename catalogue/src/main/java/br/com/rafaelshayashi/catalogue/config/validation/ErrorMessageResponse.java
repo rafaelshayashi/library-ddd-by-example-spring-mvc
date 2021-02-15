@@ -5,11 +5,11 @@ import java.util.List;
 public class ErrorMessageResponse {
 
     private String message;
-    private List<FieldErrorResponse> errorResponseList;
+    private List<FieldErrorResponse> errors;
 
-    public ErrorMessageResponse(String message, List<FieldErrorResponse> errorResponseList) {
+    public ErrorMessageResponse(String message, List<FieldErrorResponse> errors) {
         this.message = message;
-        this.errorResponseList = errorResponseList;
+        this.errors = errors;
     }
 
     public String getMessage() {
@@ -20,11 +20,11 @@ public class ErrorMessageResponse {
         this.message = message;
     }
 
-    public List<FieldErrorResponse> getErrorResponseList() {
-        return errorResponseList;
+    public List<FieldErrorResponse> getErrors() {
+        return errors;
     }
 
-    public void setErrorResponseList(List<FieldErrorResponse> errorResponseList) {
-        this.errorResponseList = errorResponseList;
+    public void setErrors(List<FieldErrorResponse> errors) {
+        this.errors = errors;
     }
 }
