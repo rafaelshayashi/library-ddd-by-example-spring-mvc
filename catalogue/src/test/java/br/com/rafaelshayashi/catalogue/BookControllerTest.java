@@ -51,7 +51,7 @@ public class BookControllerTest {
     public void should_create_a_book() throws Exception {
         Book bookMock = Book
                 .builder()
-                .name("Métricas ágeis")
+                .title("Métricas ágeis")
                 .value(BookValue.builder().amount(2900).currency("BRL").unit(UnitTypeEnum.FRACTIONAL).build())
                 .isbn("978-85-5519-276-19")
                 .build();
@@ -74,7 +74,7 @@ public class BookControllerTest {
     public void try_to_create_an_existing_book() throws Exception {
         Book bookMock = Book
                 .builder()
-                .name("Métricas ágeis")
+                .title("Métricas ágeis")
                 .value(BookValue.builder().amount(2900).currency("BRL").unit(UnitTypeEnum.FRACTIONAL).build())
                 .isbn("978-85-5519-276-19")
                 .build();
@@ -107,7 +107,7 @@ public class BookControllerTest {
     @DisplayName("POST /books - Try to create a book without value")
     public void try_to_create_a_book_without_value() throws Exception {
         Book bookRequest = Book.builder()
-                .name("Métricas ágeis")
+                .title("Métricas ágeis")
                 .isbn("978-85-5519-276-19")
                 .build();
 
@@ -122,7 +122,7 @@ public class BookControllerTest {
     @DisplayName("POST /books - Try to create a book without isbn")
     public void try_to_create_a_book_without_isbn() throws Exception {
         Book bookRequest = Book.builder()
-                .name("Métricas ágeis")
+                .title("Métricas ágeis")
                 .value(BookValue.builder().amount(2900).currency("BRL").unit(UnitTypeEnum.FRACTIONAL).build())
                 .build();
 
