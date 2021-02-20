@@ -6,6 +6,9 @@ import br.com.rafaelshayashi.catalogue.repository.LibraryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class LibraryServiceImpl implements LibraryService {
 
@@ -19,5 +22,10 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public Library create(LibraryRequest request) {
         return repository.save(request.toModel());
+    }
+
+    @Override
+    public Optional<Library> find(UUID bookUuid) {
+        return repository.findByUuid(bookUuid);
     }
 }
