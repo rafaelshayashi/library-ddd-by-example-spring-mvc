@@ -1,8 +1,11 @@
 package br.com.rafaelshayashi.catalogue.service;
 
 import br.com.rafaelshayashi.catalogue.controller.request.BookInstanceRequest;
+import br.com.rafaelshayashi.catalogue.model.Book;
 import br.com.rafaelshayashi.catalogue.model.BookInstance;
+import br.com.rafaelshayashi.catalogue.model.Library;
 import br.com.rafaelshayashi.catalogue.repository.BookInstanceRepository;
+import br.com.rafaelshayashi.catalogue.util.exception.ResourceNotExists;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,8 +23,8 @@ public class BookInstanceServiceImpl implements BookInstanceService {
 
     @Override
     public BookInstance create(BookInstanceRequest request) {
-        return repository.save(request.toModel(
-                bookService.find(request.getBookUuid()).get(),
-                libraryService.find(request.getLibraryUuid()).get()));
+        Book book = bookService.find(request.getBookUuid()).orElseThrow(ResourceNotExists::new);
+        Library library = libraryService.find(request.getLibraryUuid()).orElseThrow(ResourceNotExists::new);
+        return repository.save(request.toModel(book, library));
     }
 }
