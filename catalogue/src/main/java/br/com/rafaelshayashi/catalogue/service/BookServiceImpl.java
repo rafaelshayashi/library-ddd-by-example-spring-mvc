@@ -6,6 +6,9 @@ import br.com.rafaelshayashi.catalogue.repository.BookRepository;
 import br.com.rafaelshayashi.catalogue.util.exception.ResourceAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class BookServiceImpl implements BookService {
 
@@ -21,5 +24,10 @@ public class BookServiceImpl implements BookService {
             throw new ResourceAlreadyExistsException();
         }
         return repository.save(request.toModel());
+    }
+
+    @Override
+    public Optional<Book> find(UUID bookUuid) {
+        return repository.findByUuid(bookUuid);
     }
 }

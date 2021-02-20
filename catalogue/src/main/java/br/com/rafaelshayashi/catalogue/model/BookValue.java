@@ -13,7 +13,6 @@ public class BookValue {
     private UnitTypeEnum unitType;
 
     public BookValue() {
-
     }
 
     public BookValue(String currency, Integer amount, UnitTypeEnum unitType) {

@@ -1,4 +1,5 @@
-create table if not exists book (
+create table if not exists book
+(
     id BIGSERIAL primary key,
     uuid uuid not null,
     title varchar (255) not null,
