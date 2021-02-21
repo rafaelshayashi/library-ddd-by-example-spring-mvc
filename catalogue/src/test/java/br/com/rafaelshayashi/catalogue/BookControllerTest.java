@@ -62,7 +62,7 @@ public class BookControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(bookMock)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name", is("Métricas ágeis")))
+                .andExpect(jsonPath("$.title", is("Métricas ágeis")))
                 .andExpect(jsonPath("$.value.currency", is("BRL")))
                 .andExpect(jsonPath("$.value.amount", is(2900)))
                 .andExpect(jsonPath("$.value.unit", is("FRACTIONAL")))
