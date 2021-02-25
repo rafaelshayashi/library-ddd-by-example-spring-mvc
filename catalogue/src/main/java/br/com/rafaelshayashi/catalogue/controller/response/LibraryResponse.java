@@ -7,9 +7,9 @@ import java.util.UUID;
 
 public class LibraryResponse {
 
-    public String uuid;
-    public String name;
-    public AddressResponse address;
+    public final String uuid;
+    public final String name;
+    public final AddressResponse address;
 
     public LibraryResponse(Library library) {
         this(library.getUuid(), library.getName(), library.getAddress());

@@ -69,10 +69,6 @@ public class Library {
         private String name;
         private Address address;
 
-        public LibraryBuilder(){
-
-        }
-
         public LibraryBuilder name(String name){
             this.name = name;
             return this;
