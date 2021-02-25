@@ -59,4 +59,10 @@ public class LibraryControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", Matchers.is(("Biblioteca mario de andrade"))));
     }
+
+    @Test
+    @DisplayName("GET /libraries - Should get a list of libraries")
+    public void should_get_a_list_of_libraries() {
+
+    }
 }
