@@ -3,12 +3,12 @@ package br.com.rafaelshayashi.catalogue.service;
 import br.com.rafaelshayashi.catalogue.controller.request.LibraryRequest;
 import br.com.rafaelshayashi.catalogue.model.Library;
 import br.com.rafaelshayashi.catalogue.repository.LibraryRepository;
+import br.com.rafaelshayashi.catalogue.util.exception.ResourceAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,6 +24,9 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     public Library create(LibraryRequest request) {
+        if (repository.findByName(request.getName()).isPresent()) {
+            throw new ResourceAlreadyExistsException();
+        }
         return repository.save(request.toModel());
     }
 
