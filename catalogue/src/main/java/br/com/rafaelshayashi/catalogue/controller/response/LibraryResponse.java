@@ -11,6 +11,10 @@ public class LibraryResponse {
     public String name;
     public AddressResponse address;
 
+    public LibraryResponse(Library library) {
+        this(library.getUuid(), library.getName(), library.getAddress());
+    }
+
     public LibraryResponse(UUID uuid, String name, Address address) {
         this.uuid = uuid.toString();
         this.name = name;
