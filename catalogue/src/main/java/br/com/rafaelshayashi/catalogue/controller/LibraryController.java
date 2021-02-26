@@ -4,15 +4,20 @@ import br.com.rafaelshayashi.catalogue.controller.request.LibraryRequest;
 import br.com.rafaelshayashi.catalogue.controller.response.LibraryResponse;
 import br.com.rafaelshayashi.catalogue.service.LibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
+/**
+ * @author Rafael Simionato Hayashi
+ */
 @RestController
 @RequestMapping("/libraries")
 public class LibraryController {
@@ -29,5 +34,14 @@ public class LibraryController {
         LibraryResponse response = LibraryResponse.of(service.create(request));
         URI uri = builder.path("/libraries/{uuid}").buildAndExpand(response.getUuid()).toUri();
         return ResponseEntity.created(uri).body(response);
+    }
+
+    @GetMapping
+    public Page<LibraryResponse> list(Pageable pageable) {
+        List<LibraryResponse> libraries = service.list(pageable)
+                .stream()
+                .map(LibraryResponse::new)
+                .collect(Collectors.toList());
+        return new PageImpl<>(libraries);
     }
 }

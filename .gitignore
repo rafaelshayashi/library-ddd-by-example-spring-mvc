@@ -1,4 +1,4 @@
 docker-compose.*
 
-catalogue/src/main/resources/*.yml
+catalogue/src/main/resources/application.yml
 sql

@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface LibraryRepository extends JpaRepository<Library, Long> {
     Optional<Library> findByUuid(UUID bookUuid);
+
+    Optional<Library> findByName(String name);
 }
