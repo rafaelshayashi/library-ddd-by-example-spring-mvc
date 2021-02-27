@@ -1,4 +1,4 @@
-package br.com.rafaelshayashi.catalogue;
+package br.com.rafaelshayashi.catalogue.web;
 
 import br.com.rafaelshayashi.catalogue.controller.request.BookRequest;
 import br.com.rafaelshayashi.catalogue.model.Book;
@@ -15,15 +15,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class BookControllerTest {
-    
+
     @MockBean
     private BookService service;
 
@@ -74,18 +78,12 @@ public class BookControllerTest {
     @Test
     @DisplayName("POST /books - Try to create an existing book")
     public void try_to_create_an_existing_book() throws Exception {
-        Book bookMock = Book
-                .builder()
-                .title("Métricas ágeis")
-                .value(BookValue.builder().amount(2900).currency("BRL").unit(UnitTypeEnum.FRACTIONAL).build())
-                .isbn("978-85-5519-276-19")
-                .build();
 
         when(service.create(any())).thenThrow(new ResourceAlreadyExistsException());
 
         mockMvc.perform(post("/books")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(bookMock)))
+                .content(asJsonString(getBookMock())))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message", is("The resource already Exists")));
     }
@@ -133,5 +131,27 @@ public class BookControllerTest {
                 .content(asJsonString(bookRequest)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", is("Erro validação dados")));
+    }
+
+    @Test
+    @DisplayName("GET /books - Should get a paginated list of books")
+    public void should_get_a_paginated_list_of_books() throws Exception {
+
+        ArrayList<Book> bookList = new ArrayList<>();
+        bookList.add(getBookMock());
+        PageImpl<Book> bookPageMock = new PageImpl<>(bookList);
+        doReturn(bookPageMock).when(service).list(any());
+
+        mockMvc.perform(get("/books"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].title", is("Métricas ágeis")));
+    }
+
+    private Book getBookMock() {
+        return Book.builder()
+                .title("Métricas ágeis")
+                .value(BookValue.builder().amount(2900).currency("BRL").unit(UnitTypeEnum.FRACTIONAL).build())
+                .isbn("978-85-5519-276-19")
+                .build();
     }
 }

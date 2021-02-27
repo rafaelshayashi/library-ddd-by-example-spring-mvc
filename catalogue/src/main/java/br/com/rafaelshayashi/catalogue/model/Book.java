@@ -1,5 +1,7 @@
 package br.com.rafaelshayashi.catalogue.model;
 
+import org.springframework.util.Assert;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

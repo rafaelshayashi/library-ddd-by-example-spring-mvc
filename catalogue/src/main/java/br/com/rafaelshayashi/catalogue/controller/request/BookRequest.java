@@ -1,6 +1,7 @@
 package br.com.rafaelshayashi.catalogue.controller.request;
 
 import br.com.rafaelshayashi.catalogue.model.Book;
+import org.springframework.util.Assert;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -57,6 +58,10 @@ public class BookRequest {
     }
 
     public Book toModel() {
+        Assert.notNull(title, "title is required");
+        Assert.notNull(value, "value is required");
+        Assert.notNull(isbn, "isbn is required");
+
         return Book.builder()
                 .title(title)
                 .subTitle(subTitle)
