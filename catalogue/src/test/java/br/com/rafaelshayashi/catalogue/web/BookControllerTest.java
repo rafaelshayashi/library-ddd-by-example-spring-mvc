@@ -1,4 +1,4 @@
-package br.com.rafaelshayashi.catalogue;
+package br.com.rafaelshayashi.catalogue.web;
 
 import br.com.rafaelshayashi.catalogue.controller.request.BookRequest;
 import br.com.rafaelshayashi.catalogue.model.Book;

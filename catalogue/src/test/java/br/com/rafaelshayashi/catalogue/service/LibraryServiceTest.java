@@ -1,4 +1,4 @@
-package br.com.rafaelshayashi.catalogue;
+package br.com.rafaelshayashi.catalogue.service;
 
 import br.com.rafaelshayashi.catalogue.controller.request.LibraryAddressRequest;
 import br.com.rafaelshayashi.catalogue.controller.request.LibraryRequest;
@@ -70,8 +70,6 @@ public class LibraryServiceTest {
         Library libraryMock = Library.builder().name("Biblioteca mario de andrade").address(addressMock).build();
         Mockito.doReturn(Optional.of(libraryMock)).when(repository).findByName(ArgumentMatchers.any(String.class));
 
-        Assertions.assertThrows(ResourceAlreadyExistsException.class, () -> {
-            service.create(libraryRequest);
-        });
+        Assertions.assertThrows(ResourceAlreadyExistsException.class, () -> service.create(libraryRequest));
     }
 }
