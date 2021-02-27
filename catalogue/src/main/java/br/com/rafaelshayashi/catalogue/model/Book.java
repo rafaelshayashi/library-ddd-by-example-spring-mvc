@@ -1,5 +1,7 @@
 package br.com.rafaelshayashi.catalogue.model;
 
+import org.springframework.util.Assert;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -127,6 +129,9 @@ public class Book {
         }
 
         public Book build() {
+            Assert.notNull(title, "Title attribute is required");
+            Assert.notNull(value, "value attribute is required");
+            Assert.notNull(isbn, "isbn attribute is required");
             return new Book(title, subTitle, value, description, isbn);
         }
     }
