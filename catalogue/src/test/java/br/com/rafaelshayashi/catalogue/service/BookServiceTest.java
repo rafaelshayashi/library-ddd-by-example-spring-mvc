@@ -50,7 +50,7 @@ public class BookServiceTest {
         doReturn(Optional.of(getBookMock())).when(repository).findByIsbn(any(String.class));
         Assertions.assertThrows(ResourceAlreadyExistsException.class, () -> service.create(getBookRequest()));
     }
-
+    
     private Book getBookMock() {
         BookValue bookValue = BookValue.builder().currency("BRL").amount(6200).build();
         return Book.builder().title("Effective Java").isbn("978-0134685991").value(bookValue).build();
