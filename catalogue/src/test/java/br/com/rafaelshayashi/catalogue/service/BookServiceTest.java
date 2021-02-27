@@ -13,8 +13,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -50,7 +55,20 @@ public class BookServiceTest {
         doReturn(Optional.of(getBookMock())).when(repository).findByIsbn(any(String.class));
         Assertions.assertThrows(ResourceAlreadyExistsException.class, () -> service.create(getBookRequest()));
     }
-    
+
+    @Test
+    @DisplayName("Service - Should get a list of books")
+    public void should_get_a_list_of_books() {
+        ArrayList<Book> books = new ArrayList<>();
+        books.add(getBookMock());
+        PageImpl<Book> bookPage = new PageImpl<>(books);
+        doReturn(bookPage).when(repository).findAll(any(Pageable.class));
+
+        Pageable pageable = PageRequest.of(1, 1);
+        Page<Book> booksPage = service.list(pageable);
+        Assertions.assertEquals(1, booksPage.getTotalElements());
+    }
+
     private Book getBookMock() {
         BookValue bookValue = BookValue.builder().currency("BRL").amount(6200).build();
         return Book.builder().title("Effective Java").isbn("978-0134685991").value(bookValue).build();
