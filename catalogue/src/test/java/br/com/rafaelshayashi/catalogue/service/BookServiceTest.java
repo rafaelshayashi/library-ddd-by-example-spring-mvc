@@ -27,7 +27,7 @@ import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = BookServiceImpl.class)
-public class BookServiceTest {
+class BookServiceTest {
 
     @MockBean
     private BookRepository repository;
@@ -37,7 +37,7 @@ public class BookServiceTest {
 
     @Test
     @DisplayName("Service - Should create a book")
-    public void should_create_a_book() {
+    void should_create_a_book() {
 
         doReturn(Optional.empty()).when(repository).findByIsbn(any(String.class));
         doReturn(getBookMock()).when(repository).save(any(Book.class));
@@ -50,15 +50,16 @@ public class BookServiceTest {
 
     @Test
     @DisplayName("Service - try to create a already existing book")
-    public void try_to_create_a_already_existing_book() {
+    void try_to_create_a_already_existing_book() {
 
         doReturn(Optional.of(getBookMock())).when(repository).findByIsbn(any(String.class));
-        Assertions.assertThrows(ResourceAlreadyExistsException.class, () -> service.create(getBookRequest()));
+        BookRequest bookRequest = getBookRequest();
+        Assertions.assertThrows(ResourceAlreadyExistsException.class, () -> service.create(bookRequest));
     }
 
     @Test
     @DisplayName("Service - Should get a list of books")
-    public void should_get_a_list_of_books() {
+    void should_get_a_list_of_books() {
         ArrayList<Book> books = new ArrayList<>();
         books.add(getBookMock());
         PageImpl<Book> bookPage = new PageImpl<>(books);

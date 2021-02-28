@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class BookControllerTest {
+class BookControllerTest {
 
     @MockBean
     private BookService service;
@@ -54,7 +54,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("POST /books - Should create a Book")
-    public void should_create_a_book() throws Exception {
+    void should_create_a_book() throws Exception {
         Book bookMock = Book
                 .builder()
                 .title("Métricas ágeis")
@@ -77,7 +77,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("POST /books - Try to create an existing book")
-    public void try_to_create_an_existing_book() throws Exception {
+    void try_to_create_an_existing_book() throws Exception {
 
         when(service.create(any())).thenThrow(new ResourceAlreadyExistsException());
 
@@ -90,7 +90,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("POST /books - Try to create a book without name")
-    public void try_to_create_a_book_without_name() throws Exception {
+    void try_to_create_a_book_without_name() throws Exception {
         Book bookRequest = Book.builder()
                 .value(BookValue.builder().amount(2900).currency("BRL").unit(UnitTypeEnum.FRACTIONAL).build())
                 .isbn("978-85-5519-276-19")
@@ -105,7 +105,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("POST /books - Try to create a book without value")
-    public void try_to_create_a_book_without_value() throws Exception {
+    void try_to_create_a_book_without_value() throws Exception {
         Book bookRequest = Book.builder()
                 .title("Métricas ágeis")
                 .isbn("978-85-5519-276-19")
@@ -120,7 +120,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("POST /books - Try to create a book without isbn")
-    public void try_to_create_a_book_without_isbn() throws Exception {
+    void try_to_create_a_book_without_isbn() throws Exception {
         Book bookRequest = Book.builder()
                 .title("Métricas ágeis")
                 .value(BookValue.builder().amount(2900).currency("BRL").unit(UnitTypeEnum.FRACTIONAL).build())
@@ -135,7 +135,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("GET /books - Should get a paginated list of books")
-    public void should_get_a_paginated_list_of_books() throws Exception {
+    void should_get_a_paginated_list_of_books() throws Exception {
 
         ArrayList<Book> bookList = new ArrayList<>();
         bookList.add(getBookMock());
