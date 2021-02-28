@@ -53,3 +53,27 @@ jacocoTestReport {
         html.enabled = true
     }
 }
+
+task resolveAndLockAll {
+    doFirst {
+        assert gradle.startParameter.writeDependencyLocks
+    }
+    doLast {
+        configurations.findAll {
+            // Add any custom filtering on the configurations to be resolved
+            it.canBeResolved
+        }.each { it.resolve() }
+    }
+}
+
+configurations {
+    compileClasspath {
+        resolutionStrategy.activateDependencyLocking()
+    }
+    runtimeClasspath {
+        resolutionStrategy.activateDependencyLocking()
+    }
+    testRuntimeClasspath {
+        resolutionStrategy.activateDependencyLocking()
+    }
+}
