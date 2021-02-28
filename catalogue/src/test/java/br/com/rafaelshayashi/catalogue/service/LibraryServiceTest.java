@@ -5,8 +5,6 @@ import br.com.rafaelshayashi.catalogue.controller.request.LibraryRequest;
 import br.com.rafaelshayashi.catalogue.model.Address;
 import br.com.rafaelshayashi.catalogue.model.Library;
 import br.com.rafaelshayashi.catalogue.repository.LibraryRepository;
-import br.com.rafaelshayashi.catalogue.service.LibraryService;
-import br.com.rafaelshayashi.catalogue.service.LibraryServiceImpl;
 import br.com.rafaelshayashi.catalogue.util.exception.ResourceAlreadyExistsException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +22,7 @@ import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = LibraryServiceImpl.class)
-public class LibraryServiceTest {
+class LibraryServiceTest {
 
     @MockBean
     private LibraryRepository repository;
@@ -34,7 +32,7 @@ public class LibraryServiceTest {
 
     @Test
     @DisplayName("Should create a library")
-    public void should_create_a_library() {
+    void should_create_a_library() {
         Address addressMock = Address.builder().street("Rua da Consolação, 94").state("São Paulo").country("Brasil").zipCode("01302-000").build();
         Library libraryMock = Library.builder().name("Biblioteca mario de andrade").address(addressMock).build();
 
@@ -56,7 +54,7 @@ public class LibraryServiceTest {
 
     @Test
     @DisplayName("Try to create a already existing library")
-    public void try_to_create_a_already_existing_library() {
+    void try_to_create_a_already_existing_library() {
         LibraryRequest libraryRequest = new LibraryRequest();
         libraryRequest.setName("Biblioteca mario de andrade");
         LibraryAddressRequest libraryAddressRequest = new LibraryAddressRequest();
