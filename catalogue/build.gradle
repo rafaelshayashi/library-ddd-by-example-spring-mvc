@@ -66,14 +66,6 @@ task resolveAndLockAll {
     }
 }
 
-configurations {
-    compileClasspath {
-        resolutionStrategy.activateDependencyLocking()
-    }
-    runtimeClasspath {
-        resolutionStrategy.activateDependencyLocking()
-    }
-    testRuntimeClasspath {
-        resolutionStrategy.activateDependencyLocking()
-    }
+dependencyLocking {
+    lockAllConfigurations()
 }
