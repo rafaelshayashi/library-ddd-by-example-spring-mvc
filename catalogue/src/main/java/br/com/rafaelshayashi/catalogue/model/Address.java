@@ -62,9 +62,6 @@ public class Address {
         private String country;
         private String zipCode;
 
-        public AddressBuilder() {
-        }
-
         public AddressBuilder street(String street) {
             this.street = street;
             return this;
