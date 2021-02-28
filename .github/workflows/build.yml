@@ -1,11 +1,15 @@
-name: Build
+name: Build and test catalogue
 on:
   push:
     branches:
-      - main 
+      - main
+    paths:
+      - catalogue/**
   pull_request:
     types: [opened, synchronize, reopened]
-    
+    paths:
+      - catalogue/**
+
 defaults:
   run:
     working-directory: ./catalogue
