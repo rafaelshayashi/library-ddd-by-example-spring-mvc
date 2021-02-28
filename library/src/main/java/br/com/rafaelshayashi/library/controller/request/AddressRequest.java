@@ -2,7 +2,7 @@ package br.com.rafaelshayashi.library.controller.request;
 
 import br.com.rafaelshayashi.library.model.Address;
 
-public class LibraryAddressRequest {
+public class AddressRequest {
 
     private String street;
     private String state;

@@ -1,6 +1,6 @@
 package br.com.rafaelshayashi.library.service;
 
-import br.com.rafaelshayashi.library.controller.request.LibraryAddressRequest;
+import br.com.rafaelshayashi.library.controller.request.AddressRequest;
 import br.com.rafaelshayashi.library.controller.request.LibraryBranchRequest;
 import br.com.rafaelshayashi.library.exception.ResourceAlreadyExistsException;
 import br.com.rafaelshayashi.library.model.Address;
@@ -78,12 +78,12 @@ class LibraryBranchServiceTest {
     private LibraryBranchRequest getLibraryBranchRequest() {
         LibraryBranchRequest libraryRequest = new LibraryBranchRequest();
         libraryRequest.setName("Biblioteca mario de andrade");
-        LibraryAddressRequest libraryAddressRequest = new LibraryAddressRequest();
-        libraryAddressRequest.setStreet("Rua da Consolação, 94");
-        libraryAddressRequest.setState("São Paulo");
-        libraryAddressRequest.setCountry("Brasil");
-        libraryAddressRequest.setZipCode("01302-000");
-        libraryRequest.setAddress(libraryAddressRequest);
+        AddressRequest addressRequest = new AddressRequest();
+        addressRequest.setStreet("Rua da Consolação, 94");
+        addressRequest.setState("São Paulo");
+        addressRequest.setCountry("Brasil");
+        addressRequest.setZipCode("01302-000");
+        libraryRequest.setAddress(addressRequest);
         return libraryRequest;
     }
 

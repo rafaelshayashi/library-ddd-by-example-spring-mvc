@@ -3,14 +3,12 @@ package br.com.rafaelshayashi.library.controller.request;
 import br.com.rafaelshayashi.library.model.LibraryBranch;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 public class LibraryBranchRequest {
 
     @NotEmpty
     private String name;
-    @NotNull
-    private LibraryAddressRequest address;
+    private AddressRequest address;
 
     public String getName() {
         return name;
@@ -20,11 +18,11 @@ public class LibraryBranchRequest {
         this.name = name;
     }
 
-    public LibraryAddressRequest getAddress() {
+    public AddressRequest getAddress() {
         return address;
     }
 
-    public void setAddress(LibraryAddressRequest address) {
+    public void setAddress(AddressRequest address) {
         this.address = address;
     }
 

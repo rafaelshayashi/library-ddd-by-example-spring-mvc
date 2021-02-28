@@ -17,6 +17,9 @@ public class AddressResponse {
     }
 
     public static AddressResponse of(Address address) {
+        if (address == null) {
+            return new AddressResponse(null, null, null, null);
+        }
         return new AddressResponse(address.getStreet(), address.getState(), address.getCountry(), address.getZipCode());
     }
 

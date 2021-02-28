@@ -82,4 +82,18 @@ class LibraryBranchControllerTest {
                 .andExpect(jsonPath("$.content[0].name", Matchers.is("Biblioteca mario de andrade")));
 
     }
+
+    @Test
+    @DisplayName("POST /libraries - Should create a library branch without a address")
+    void should_create_a_library_branch_without_a_address() throws Exception {
+        LibraryBranch libraryMock = LibraryBranch.builder().name("Biblioteca mario de andrade").build();
+
+        doReturn(libraryMock).when(service).create(any(LibraryBranchRequest.class));
+
+        mockMvc.perform(post(RESOURCE_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(libraryMock)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name", Matchers.is(("Biblioteca mario de andrade"))));
+    }
 }
