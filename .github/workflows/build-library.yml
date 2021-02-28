@@ -1,4 +1,4 @@
-name: Build and test catalogue
+name: Build and test library
 on:
   push:
     branches:
