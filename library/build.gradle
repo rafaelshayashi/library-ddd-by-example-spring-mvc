@@ -50,6 +50,7 @@ sonarqube {
         property "sonar.projectKey", "library-ddd-by-example-spring-mvc-library"
         property "sonar.organization", "rafaelshayashi"
         property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.cpd.exclusions", "**/controller/request"
     }
 }
 
