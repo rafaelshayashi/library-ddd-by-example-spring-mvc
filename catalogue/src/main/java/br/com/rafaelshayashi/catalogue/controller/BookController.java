@@ -13,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -41,5 +42,12 @@ public class BookController {
                 .map(BookResponse::new)
                 .collect(Collectors.toList());
         return new PageImpl<>(bookResponseList);
+    }
+
+    @GetMapping("/{uuid}")
+    public ResponseEntity<BookResponse> details(@PathVariable String uuid){
+        return service.find(UUID.fromString(uuid))
+                .map(book -> ResponseEntity.ok().body(BookResponse.of(book)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

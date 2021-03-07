@@ -22,6 +22,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -146,6 +148,19 @@ class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].title", is("Métricas ágeis")));
     }
+
+
+    @Test
+    @DisplayName("GET /books/{uuid} - Should get details of a book")
+    void should_get_details_of_a_book() throws Exception {
+
+        doReturn(Optional.of(getBookMock())).when(service).find(any(UUID.class));
+
+        mockMvc.perform(get("/books/{uuid}", "6f7cc83b-2c35-4faf-902c-1a38cc8969a3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is("Métricas ágeis")));
+    }
+
 
     private Book getBookMock() {
         return Book.builder()
