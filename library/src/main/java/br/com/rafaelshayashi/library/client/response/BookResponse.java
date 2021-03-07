@@ -1,4 +1,6 @@
-package br.com.rafaelshayashi.library.client;
+package br.com.rafaelshayashi.library.client.response;
+
+import br.com.rafaelshayashi.library.client.response.BookValueResponse;
 
 public class BookResponse {
 

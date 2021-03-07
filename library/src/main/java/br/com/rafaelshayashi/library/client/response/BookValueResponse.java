@@ -1,4 +1,4 @@
-package br.com.rafaelshayashi.library.client;
+package br.com.rafaelshayashi.library.client.response;
 
 public class BookValueResponse {
 

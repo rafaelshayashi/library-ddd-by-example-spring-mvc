@@ -1,6 +1,6 @@
 package br.com.rafaelshayashi.library.service;
 
-import br.com.rafaelshayashi.library.client.BookResponse;
+import br.com.rafaelshayashi.library.client.response.BookResponse;
 import br.com.rafaelshayashi.library.client.CatalogueBook;
 import br.com.rafaelshayashi.library.controller.request.BookInstanceRequest;
 import br.com.rafaelshayashi.library.model.BookInstance;
