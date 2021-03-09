@@ -1,5 +1,7 @@
 package br.com.rafaelshayashi.library.model;
 
+import br.com.rafaelshayashi.library.controller.response.BookInstanceResponse;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -59,6 +61,10 @@ public class BookInstance {
 
     public void setLibrary(LibraryBranch library) {
         this.library = library;
+    }
+
+    public BookInstanceResponse toResponse() {
+        return BookInstanceResponse.of(this);
     }
 
     public static class BookInstanceBuilder {

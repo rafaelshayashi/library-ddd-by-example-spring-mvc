@@ -26,8 +26,14 @@ public class BookInstanceServiceImpl implements BookInstanceService {
 
     @Override
     public BookInstance create(BookInstanceRequest request) {
-        BookResponse bookResponse = bookService.detailsBook(UUID.fromString(request.getBookUuid())).orElseThrow(ResourceNotExists::new);
-        LibraryBranch libraryBranch = libraryService.find(UUID.fromString(request.getLibraryUuid())).orElseThrow(ResourceNotExists::new);
+        BookResponse bookResponse = bookService
+                .detailsBook(UUID.fromString(request.getBookUuid()))
+                .orElseThrow(ResourceNotExists::new);
+
+        LibraryBranch libraryBranch = libraryService
+                .find(UUID.fromString(request.getLibraryUuid()))
+                .orElseThrow(ResourceNotExists::new);
+
         return repository.save(request.toModel(UUID.fromString(bookResponse.getUuid()), libraryBranch));
     }
 }

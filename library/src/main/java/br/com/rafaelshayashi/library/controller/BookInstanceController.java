@@ -25,7 +25,8 @@ public class BookInstanceController {
     @PostMapping
     public ResponseEntity<BookInstanceResponse> create(@RequestBody BookInstanceRequest request,
                                                        UriComponentsBuilder builder) {
-        BookInstanceResponse response = BookInstanceResponse.of(service.create(request));
+
+        BookInstanceResponse response = service.create(request).toResponse();
         URI uri = builder.path("/books/instances/{uuid}").buildAndExpand(response.getUuid()).toUri();
         return ResponseEntity.created(uri).body(response);
     }
