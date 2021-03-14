@@ -3,11 +3,14 @@ package br.com.rafaelshayashi.library.controller.request;
 import br.com.rafaelshayashi.library.model.BookInstance;
 import br.com.rafaelshayashi.library.model.LibraryBranch;
 
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class BookInstanceRequest {
 
+    @NotNull
     private String bookUuid;
+    @NotNull
     private String libraryUuid;
 
     public String getBookUuid() {

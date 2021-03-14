@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -23,7 +24,7 @@ public class BookInstanceController {
     }
 
     @PostMapping
-    public ResponseEntity<BookInstanceResponse> create(@RequestBody BookInstanceRequest request,
+    public ResponseEntity<BookInstanceResponse> create(@RequestBody @Valid BookInstanceRequest request,
                                                        UriComponentsBuilder builder) {
 
         BookInstanceResponse response = service.create(request).toResponse();
