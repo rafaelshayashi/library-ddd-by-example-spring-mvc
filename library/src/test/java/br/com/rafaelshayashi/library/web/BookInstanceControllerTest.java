@@ -62,6 +62,8 @@ class BookInstanceControllerTest {
         doReturn(bookInstanceMock).when(service).create(any());
 
         BookInstanceRequest request = new BookInstanceRequest();
+        request.setBookUuid(UUID.randomUUID().toString());
+        request.setLibraryUuid(UUID.randomUUID().toString());
 
         mockMvc.perform(post("/books/instances")
                 .contentType(MediaType.APPLICATION_JSON)
