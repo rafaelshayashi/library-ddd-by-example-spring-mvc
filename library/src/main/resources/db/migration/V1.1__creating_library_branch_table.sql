@@ -1,4 +1,4 @@
-create table if not exists library
+create table if not exists library_branch
 (
     id       bigserial primary key,
     uuid     uuid         not null,
