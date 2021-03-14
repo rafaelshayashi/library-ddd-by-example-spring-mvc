@@ -1,5 +1,6 @@
 package br.com.rafaelshayashi.library.config.feign;
 
+import br.com.rafaelshayashi.library.exception.ResourceNotExistsException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import org.slf4j.Logger;
@@ -17,10 +18,11 @@ public class FeignErrorDecoder implements ErrorDecoder {
         switch (response.status()) {
             case 400:
                 logger.error("Status code " + response.status() + ", methodKey = " + methodKey);
-                return null;
+                return new Exception(response.reason());
             case 404:
-                logger.error("Error took place when using Feign client to send HTTP Request. Status code " + response.status() + ", methodKey = " + methodKey);
-                return null;
+                String message = String.format("Error took place when using Feign client to send HTTP Request. Status code %s, methodkey = %s", response.status(), methodKey);
+                logger.warn(message);
+                return new ResourceNotExistsException(response.request().url());
             default:
                 return new Exception(response.reason());
         }
