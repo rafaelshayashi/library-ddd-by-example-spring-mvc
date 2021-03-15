@@ -19,9 +19,12 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      # Does the checkout on the current github repository
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      # Get the jdk 11 for building the application
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
@@ -38,6 +41,8 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
+
+      # Build the application and do the static analysys with sonarqube
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any

@@ -1,9 +1,9 @@
 package br.com.rafaelshayashi.library.service;
 
-import br.com.rafaelshayashi.library.client.response.BookResponse;
 import br.com.rafaelshayashi.library.client.CatalogueBook;
+import br.com.rafaelshayashi.library.client.response.BookResponse;
 import br.com.rafaelshayashi.library.controller.request.BookInstanceRequest;
-import br.com.rafaelshayashi.library.exception.ResourceNotExists;
+import br.com.rafaelshayashi.library.exception.ResourceNotExistsException;
 import br.com.rafaelshayashi.library.model.BookInstance;
 import br.com.rafaelshayashi.library.model.LibraryBranch;
 import br.com.rafaelshayashi.library.repository.BookInstanceRepository;
@@ -26,8 +26,14 @@ public class BookInstanceServiceImpl implements BookInstanceService {
 
     @Override
     public BookInstance create(BookInstanceRequest request) {
-        BookResponse bookResponse = bookService.detailsBook(UUID.fromString(request.getBookUuid())).orElseThrow(ResourceNotExists::new);
-        LibraryBranch libraryBranch = libraryService.find(UUID.fromString(request.getLibraryUuid())).orElseThrow(ResourceNotExists::new);
+        BookResponse bookResponse = bookService
+                .detailsBook(UUID.fromString(request.getBookUuid()))
+                .orElseThrow(() -> new ResourceNotExistsException(request.getBookUuid()));
+
+        LibraryBranch libraryBranch = libraryService
+                .find(UUID.fromString(request.getLibraryUuid()))
+                .orElseThrow(() -> new ResourceNotExistsException(request.getLibraryUuid()));
+
         return repository.save(request.toModel(UUID.fromString(bookResponse.getUuid()), libraryBranch));
     }
 }
