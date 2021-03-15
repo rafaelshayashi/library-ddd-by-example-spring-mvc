@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.text.MessageFormat;
+
 @Component
 public class FeignErrorDecoder implements ErrorDecoder {
 
@@ -17,7 +19,8 @@ public class FeignErrorDecoder implements ErrorDecoder {
 
         switch (response.status()) {
             case 400:
-                logger.error("Status code " + response.status() + ", methodKey = " + methodKey);
+                String messageBadRequest = MessageFormat.format("Status code {0}, methodKey = {1}", response.status(), methodKey);
+                logger.error(messageBadRequest);
                 return new Exception(response.reason());
             case 404:
                 String message = String.format("Error took place when using Feign client to send HTTP Request. Status code %s, methodkey = %s", response.status(), methodKey);

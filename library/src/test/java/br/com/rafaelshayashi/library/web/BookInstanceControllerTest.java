@@ -1,6 +1,7 @@
 package br.com.rafaelshayashi.library.web;
 
 import br.com.rafaelshayashi.library.controller.request.BookInstanceRequest;
+import br.com.rafaelshayashi.library.exception.ResourceNotExistsException;
 import br.com.rafaelshayashi.library.model.BookInstance;
 import br.com.rafaelshayashi.library.model.LibraryBranch;
 import br.com.rafaelshayashi.library.service.BookInstanceService;
@@ -22,6 +23,7 @@ import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -47,7 +49,7 @@ class BookInstanceControllerTest {
 
     @Test
     @DisplayName("POST /books/instances - Should create a book instance")
-    void should_create_a_book_instance() throws Exception{
+    void should_create_a_book_instance() throws Exception {
 
         LibraryBranch libraryBranchMock = LibraryBranch.builder()
                 .name("The New York Public Library")
@@ -69,5 +71,22 @@ class BookInstanceControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(request)))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    @DisplayName("POST /books/instances - Try to create a book instance with a nonexistent book")
+    void try_to_create_a_book_instance_with_a_nonexistent_book() throws Exception {
+
+        doThrow(new ResourceNotExistsException(UUID.fromString("03e9ffcc-2191-4dd1-8d05-86976a5f431d").toString()))
+                .when(service).create(any());
+
+        BookInstanceRequest request = new BookInstanceRequest();
+        request.setBookUuid(UUID.randomUUID().toString());
+        request.setLibraryUuid(UUID.randomUUID().toString());
+
+        mockMvc.perform(post("/books/instances")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(request)))
+                .andExpect(status().isBadRequest());
     }
 }
