@@ -53,3 +53,19 @@ jacocoTestReport {
         html.enabled = true
     }
 }
+
+// Gradle lockfile for improving Snyk scan
+dependencyLocking() {
+    lockAllConfigurations()
+}
+
+task resolveAndLockAll {
+    doFirst {
+        assert gradle.startParameter.writeDependencyLocks
+    }
+    doLast {
+        configurations.findAll {
+            it.canBeResolved
+        }.each {it.resolve()}
+    }
+}
