@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -26,10 +29,12 @@ public class BookController {
         this.service = service;
     }
 
+    @PreAuthorize("hasRole('librarian')")
     @PostMapping
     public ResponseEntity<BookResponse> create(@RequestBody @Valid BookRequest request,
+                                               @AuthenticationPrincipal Jwt jwt,
                                                UriComponentsBuilder uriBuilder) {
-
+        request.setUserId(jwt.getSubject());
         BookResponse bookResponse = BookResponse.of(service.create(request));
         URI uri = uriBuilder.path("/books/{uuid}").buildAndExpand(bookResponse.getUuid()).toUri();
         return ResponseEntity.created(uri).body(bookResponse);
