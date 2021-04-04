@@ -58,4 +58,12 @@ Library Branch -> Identification, address
 Service worker -> Verificacao diária
 
 
+## Gradle
+
+this projects uses gradle as a tool for building the java applications and also uses a feature that generated a gradle
+lock file using the following commnad
+
+```bash
+./gradlew resolveAndLockAll --write-locks
+```
 
