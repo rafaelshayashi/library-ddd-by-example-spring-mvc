@@ -31,6 +31,9 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
 
+    // Spring security
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
     // Tools
     implementation 'org.flywaydb:flyway-core'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -77,5 +80,21 @@ jacocoTestReport {
     reports {
         xml.enabled = true
         html.enabled = true
+    }
+}
+
+// Gradle lockfile for improving Snyk scan
+dependencyLocking() {
+    lockAllConfigurations()
+}
+
+task resolveAndLockAll {
+    doFirst {
+        assert gradle.startParameter.writeDependencyLocks
+    }
+    doLast {
+        configurations.findAll {
+            it.canBeResolved
+        }.each {it.resolve()}
     }
 }
