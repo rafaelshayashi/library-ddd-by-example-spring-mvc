@@ -4,6 +4,8 @@ import br.com.rafaelshayashi.catalogue.controller.request.BookRequest;
 import br.com.rafaelshayashi.catalogue.model.Book;
 import br.com.rafaelshayashi.catalogue.repository.BookRepository;
 import br.com.rafaelshayashi.catalogue.util.exception.ResourceAlreadyExistsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.UUID;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository repository;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public BookServiceImpl(BookRepository repository) {
         this.repository = repository;
@@ -22,9 +25,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book create(BookRequest request) {
+        
         if (repository.findByIsbn(request.getIsbn()).isPresent()) {
+            logger.info("Book already exists - ISBN [{}]", request.getIsbn());
             throw new ResourceAlreadyExistsException();
         }
+        logger.info("Book created with success");
         return repository.save(request.toModel());
     }
 
