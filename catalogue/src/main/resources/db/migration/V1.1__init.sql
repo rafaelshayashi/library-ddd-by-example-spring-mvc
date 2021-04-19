@@ -1,6 +1,6 @@
 create table if not exists book
 (
-    id BIGSERIAL primary key,
+    id bigserial primary key,
     uuid uuid not null,
     title varchar (255) not null,
     sub_title varchar (255),
@@ -8,5 +8,6 @@ create table if not exists book
     amount integer not null,
     unit_type varchar not null,
     description text,
-    isbn varchar not null unique
+    isbn varchar not null unique,
+    user_id varchar not null
 );

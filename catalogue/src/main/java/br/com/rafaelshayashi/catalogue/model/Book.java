@@ -21,17 +21,20 @@ public class Book {
     private String description;
     @NotEmpty
     private String isbn;
+    @NotEmpty
+    private String userId;
 
     public Book() {
     }
 
-    public Book(String title, String subTitle, BookValue value, String description, String isbn) {
+    public Book(String title, String subTitle, BookValue value, String description, String isbn, String userId) {
         this.uuid = UUID.randomUUID();
         this.title = title;
         this.subTitle = subTitle;
         this.value = value;
         this.description = description;
         this.isbn = isbn;
+        this.userId = userId;
     }
 
     public static BookBuilder builder() {
@@ -94,12 +97,21 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String user) {
+        this.userId = user;
+    }
+
     public static final class BookBuilder {
         private String title;
         private String subTitle;
         private BookValue value;
         private String description;
         private String isbn;
+        private String userId;
 
         public BookBuilder title(String title) {
             this.title = title;
@@ -126,8 +138,13 @@ public class Book {
             return this;
         }
 
+        public BookBuilder userId(String userId){
+            this.userId = userId;
+            return this;
+        }
+
         public Book build() {
-            return new Book(title, subTitle, value, description, isbn);
+            return new Book(title, subTitle, value, description, isbn, userId);
         }
     }
 }

@@ -1,6 +1,7 @@
 package br.com.rafaelshayashi.catalogue.controller.request;
 
 import br.com.rafaelshayashi.catalogue.model.Book;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.util.Assert;
 
 import javax.validation.constraints.NotEmpty;
@@ -16,6 +17,8 @@ public class BookRequest {
     private String description;
     @NotEmpty
     private String isbn;
+    @JsonIgnore
+    private String userId;
 
     public String getTitle() {
         return title;
@@ -57,10 +60,19 @@ public class BookRequest {
         this.isbn = isbn;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public Book toModel() {
         Assert.notNull(title, "title is required");
         Assert.notNull(value, "value is required");
         Assert.notNull(isbn, "isbn is required");
+        Assert.notNull(userId, "user id is required");
 
         return Book.builder()
                 .title(title)
@@ -68,6 +80,7 @@ public class BookRequest {
                 .value(value.toModel())
                 .description(description)
                 .isbn(isbn)
+                .userId(userId)
                 .build();
     }
 }

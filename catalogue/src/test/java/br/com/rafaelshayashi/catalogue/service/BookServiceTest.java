@@ -21,6 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -83,6 +84,7 @@ class BookServiceTest {
         request.setTitle("Effective Java");
         request.setIsbn("978-0134685991");
         request.setValue(bookValueRequest);
+        request.setUserId(UUID.randomUUID().toString());
         return request;
     }
 }
