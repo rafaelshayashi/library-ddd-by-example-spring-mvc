@@ -6,6 +6,7 @@ import br.com.rafaelshayashi.catalogue.service.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,7 +21,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
 public class BookController {
 
     private final BookService service;
@@ -50,7 +51,7 @@ public class BookController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<BookResponse> details(@PathVariable String uuid){
+    public ResponseEntity<BookResponse> details(@PathVariable String uuid) {
         return service.find(UUID.fromString(uuid))
                 .map(book -> ResponseEntity.ok().body(BookResponse.of(book)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
