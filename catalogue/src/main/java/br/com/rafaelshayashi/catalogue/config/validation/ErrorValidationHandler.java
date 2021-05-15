@@ -35,7 +35,7 @@ public class ErrorValidationHandler {
             return new FieldErrorResponse(fieldError.getField(), message);
         }).collect(Collectors.toList());
 
-        return new ErrorMessageResponse("Erro validação dados", fieldErrorResponses);
+        return new ErrorMessageResponse("Validation error", fieldErrorResponses);
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
