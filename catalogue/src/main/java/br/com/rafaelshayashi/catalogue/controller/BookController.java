@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,8 +35,8 @@ public class BookController {
                                                @AuthenticationPrincipal Jwt jwt,
                                                UriComponentsBuilder uriBuilder) {
         request.setUserId(jwt.getSubject());
-        BookResponse bookResponse = BookResponse.of(service.create(request));
-        URI uri = uriBuilder.path("/books/{uuid}").buildAndExpand(bookResponse.getUuid()).toUri();
+        var bookResponse = BookResponse.of(service.create(request));
+        var uri = uriBuilder.path("/books/{uuid}").buildAndExpand(bookResponse.getUuid()).toUri();
         return ResponseEntity.created(uri).body(bookResponse);
     }
 
