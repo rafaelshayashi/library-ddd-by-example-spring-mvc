@@ -17,6 +17,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
 
         http.authorizeRequests()
+                .antMatchers("/swagger-ui.html","/swagger-ui/**", "/v3/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2ResourceServer()

@@ -16,6 +16,7 @@ repositories {
 
 ext {
     set('springCloudVersion', "2020.0.2")
+    set('springDocVersion', '1.5.8')
 }
 
 dependencies {
@@ -25,9 +26,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation "org.springdoc:springdoc-openapi-ui:${springDocVersion}"
+    implementation "org.springdoc:springdoc-openapi-security:${springDocVersion}"
+
+    // Database
     implementation 'org.flywaydb:flyway-core'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
+
+    // Tools
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // Tests
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
