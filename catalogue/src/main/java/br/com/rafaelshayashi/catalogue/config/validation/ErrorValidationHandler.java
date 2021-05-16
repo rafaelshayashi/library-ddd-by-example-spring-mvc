@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +32,7 @@ public class ErrorValidationHandler {
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         List<FieldErrorResponse> fieldErrorResponses = fieldErrors.stream().map(fieldError -> {
             String message = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
-            return new FieldErrorResponse(fieldError.getField(), message);
+            return new FieldErrorResponse(fieldError.getField(), "field", message);
         }).collect(Collectors.toList());
 
         return new ErrorMessageResponse("Validation error", fieldErrorResponses);
@@ -41,6 +41,7 @@ public class ErrorValidationHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(ResourceAlreadyExistsException.class)
     public ErrorMessageResponse handleResourceAlreadyExistsException(ResourceAlreadyExistsException exception){
-        return new ErrorMessageResponse("The resource already Exists", new ArrayList<>());
+        return new ErrorMessageResponse("The resource already Exists",
+                Collections.singletonList(new FieldErrorResponse(exception.getPrimaryKeyFieldName(), exception.getReferenceUuid(), exception.getMessage())));
     }
 }
