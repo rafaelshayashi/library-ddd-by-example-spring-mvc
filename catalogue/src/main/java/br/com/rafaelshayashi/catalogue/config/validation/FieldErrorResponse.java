@@ -1,5 +1,7 @@
 package br.com.rafaelshayashi.catalogue.config.validation;
 
+import br.com.rafaelshayashi.catalogue.util.exception.ResourceAlreadyExistsException;
+
 public class FieldErrorResponse {
 
     private final String field;
@@ -10,6 +12,14 @@ public class FieldErrorResponse {
         this.field = field;
         this.reference = reference;
         this.error = error;
+    }
+
+    public static FieldErrorResponse from(RuntimeException exception) {
+        if(exception instanceof ResourceAlreadyExistsException){
+            ResourceAlreadyExistsException ex = (ResourceAlreadyExistsException) exception;
+            return new FieldErrorResponse(ex.getPrimaryKeyFieldName(), ex.getReferenceUuid(), ex.getMessage());
+        }
+        return new FieldErrorResponse("default", "default", exception.getMessage());
     }
 
     public String getField() {

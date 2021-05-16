@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +26,7 @@ public class ErrorValidationHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ErrorMessageResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
+    public ErrorMessageResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
 
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         List<FieldErrorResponse> fieldErrorResponses = fieldErrors.stream().map(fieldError -> {
@@ -35,13 +34,12 @@ public class ErrorValidationHandler {
             return new FieldErrorResponse(fieldError.getField(), "field", message);
         }).collect(Collectors.toList());
 
-        return new ErrorMessageResponse("Validation error", fieldErrorResponses);
+        return ErrorMessageResponse.create("Validation error", fieldErrorResponses);
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(ResourceAlreadyExistsException.class)
-    public ErrorMessageResponse handleResourceAlreadyExistsException(ResourceAlreadyExistsException exception){
-        return new ErrorMessageResponse("The resource already Exists",
-                Collections.singletonList(new FieldErrorResponse(exception.getPrimaryKeyFieldName(), exception.getReferenceUuid(), exception.getMessage())));
+    public ErrorMessageResponse handleResourceAlreadyExistsException(ResourceAlreadyExistsException exception) {
+        return ErrorMessageResponse.create("The resource already Exists", FieldErrorResponse.from(exception));
     }
 }
