@@ -25,10 +25,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book create(BookRequest request) {
-        
-        if (repository.findByIsbn(request.getIsbn()).isPresent()) {
+
+        Optional<Book> bookOptional = repository.findByIsbn(request.getIsbn());
+        if (bookOptional.isPresent()) {
             logger.info("Book already exists - ISBN [{}]", request.getIsbn());
-            throw new ResourceAlreadyExistsException();
+            throw new ResourceAlreadyExistsException("isbn", bookOptional.get().getUuid().toString(), "Book already exists");
         }
         logger.info("Book created with success");
         return repository.save(request.toModel());

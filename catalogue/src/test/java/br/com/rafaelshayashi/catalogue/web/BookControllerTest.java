@@ -119,7 +119,7 @@ class BookControllerTest {
     void try_to_create_an_existing_book() throws Exception {
 
         String token = JWSBuilder.getToken(rsaJsonWebKey, subject, wireMockServerBaseUrl).getCompactSerialization();
-        when(service.create(any())).thenThrow(new ResourceAlreadyExistsException());
+        when(service.create(any())).thenThrow(new ResourceAlreadyExistsException("isbn", UUID.randomUUID().toString(), "The resource already exists"));
 
         mockMvc.perform(post("/books")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
@@ -143,7 +143,7 @@ class BookControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(bookRequest)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message", is("Erro validação dados")));
+                .andExpect(jsonPath("$.message", is("Validation error")));
     }
 
     @Test
@@ -160,7 +160,7 @@ class BookControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(bookRequest)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message", is("Erro validação dados")));
+                .andExpect(jsonPath("$.message", is("Validation error")));
     }
 
     @Test
@@ -177,7 +177,7 @@ class BookControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(bookRequest)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message", is("Erro validação dados")));
+                .andExpect(jsonPath("$.message", is("Validation error")));
     }
 
     @Test

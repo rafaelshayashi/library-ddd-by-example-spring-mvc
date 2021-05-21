@@ -1,5 +1,6 @@
 package br.com.rafaelshayashi.catalogue.config.validation;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ErrorMessageResponse {
@@ -10,6 +11,14 @@ public class ErrorMessageResponse {
     public ErrorMessageResponse(String message, List<FieldErrorResponse> errors) {
         this.message = message;
         this.errors = errors;
+    }
+
+    public static ErrorMessageResponse create(String message, FieldErrorResponse fieldErrorResponse) {
+        return new ErrorMessageResponse(message, Collections.singletonList(fieldErrorResponse));
+    }
+
+    public static ErrorMessageResponse create(String message, List<FieldErrorResponse> fieldErrorResponse) {
+        return new ErrorMessageResponse(message, fieldErrorResponse);
     }
 
     public String getMessage() {
