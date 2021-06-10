@@ -1,5 +1,6 @@
 # Library (ddd by example) | Desafio de código
 
+This is a example project 
 Esse projeto visa implementar um software para gerênciamento de livros em uma bibliotéca, é um projeto de estudo 
 e o seu objetivo principal é implementar utilizando uma aqrtuitetura de microsservicos com funcionalidaes 
 muitos proximas do mundo real.
