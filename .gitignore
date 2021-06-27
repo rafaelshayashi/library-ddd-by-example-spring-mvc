@@ -1,5 +1,4 @@
-docker-compose.*
-
 catalogue/src/main/resources/application.yml
 library/src/main/resources/application.yml
-sql
+
+.env
