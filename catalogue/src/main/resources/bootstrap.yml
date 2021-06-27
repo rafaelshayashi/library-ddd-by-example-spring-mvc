@@ -5,4 +5,4 @@ spring:
     active: local
   cloud:
     config:
-      uri: http://library.lan/config-server
+      uri: http://localhost/config-server

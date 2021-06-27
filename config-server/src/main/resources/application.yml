@@ -1,5 +1,6 @@
 server:
   port: 8888
+
 spring:
   profiles:
     active: git
@@ -9,6 +10,9 @@ spring:
     config:
       server:
         git:
-          uri: file://${user.home}/Temp/config-repo
+          uri: https://github.com/rafaelshayashi/library-ddd-by-example-spring-mvc-config-server-files
           search-paths: '{application}/{profile}'
         default-label: main
+
+encrypt:
+  key: MLo43M1G5lJ1FzhE5c4Ah3O^OwOhDlTv
